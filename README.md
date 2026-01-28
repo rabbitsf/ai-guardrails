@@ -7,11 +7,31 @@ It is designed to solve a core failure mode of large language models in coding:
 
 AI Guardrails fixes this by combining **explicit rules**, **external system memory**, **guided workflows**, and **mechanical enforcement**.
 
-This repository is intended for **GitHub use** and can be adopted:
+**Quick start:** Clone this repo → install the plugin from `ai-guardrails/` into `~/.claude/plugins/ai-guardrails` (see [Installation](#installation)) → add `CLAUDE.md` and `docs/PROJECT_GUIDE.md` to your project (or copy from `project-root/`) → for each change, run `/ai-guardrails:start <goal>` before coding and `/ai-guardrails:end` after.
+
+This repository is intended for **use on GitHub** and can be adopted:
 - by individuals
 - by teams
 - incrementally or fully
 - with or without Claude Code plugins
+
+---
+
+## Table of contents
+
+- [Why This Exists](#why-this-exists)
+- [Installation](#installation)
+- [Core Design Principles](#core-design-principles)
+- [Key Files & Their Roles](#key-files--their-roles)
+- [File Structure](#file-structure)
+- [Mental Model (Very Important)](#mental-model-very-important)
+- [Standard Workflow (Canonical)](#standard-workflow-canonical)
+- [What Counts as a Canonical Change?](#what-counts-as-a-canonical-change)
+- [How Enforcement Works (No Prompts, by Design)](#how-enforcement-works-no-prompts-by-design)
+- [Manual Adoption (No Plugin)](#manual-adoption-no-plugin)
+- [When NOT to Update Each File](#when-not-to-update-each-file)
+- [Who This Is For](#who-this-is-for)
+- [License](#license)
 
 ---
 
@@ -27,6 +47,24 @@ Common failure modes:
 - No durable memory across sessions
 
 AI Guardrails introduces **structure and discipline** so AI remains helpful *without taking control away from humans*.
+
+---
+
+## Installation
+
+**Prerequisites:** Claude Code; Python 3 (required for hook enforcement). Cursor and other clients may use a different plugin path or mechanism—see your editor's documentation.
+
+This repo contains the plugin under the `ai-guardrails/` directory. To use it:
+
+1. Clone this repository.
+2. Either **copy** the `ai-guardrails/` folder to `~/.claude/plugins/ai-guardrails`, or **symlink** it:
+   ```bash
+   ln -s /path/to/this/repo/ai-guardrails ~/.claude/plugins/ai-guardrails
+   ```
+
+The enforcement hooks assume the plugin lives at `~/.claude/plugins/ai-guardrails`; if you install elsewhere, you must update the script paths in `hooks/hooks.json`.
+
+The `project-root/` directory in this repo is an **example** project layout (CLAUDE.md + docs) that you can copy into your own projects.
 
 ---
 
@@ -58,6 +96,8 @@ AI Guardrails introduces **structure and discipline** so AI remains helpful *wit
 ---
 
 ## File Structure
+
+This repository contains both: the plugin (under `ai-guardrails/`) and an example project layout (under `project-root/`).
 
 ### Plugin (user-level, reusable)
 
@@ -213,6 +253,8 @@ Instead:
 
 You may override intentionally, but never silently.
 
+The blocking hook runs a script under `~/.claude/plugins/ai-guardrails/scripts/`; see [Installation](#installation) for the expected install path.
+
 ---
 
 ## Manual Adoption (No Plugin)
@@ -249,4 +291,4 @@ Each file has a purpose.
 
 ## License
 
-MIT — use freely, copy aggressively, adapt to your workflow.
+MIT — see [LICENSE](LICENSE). Use freely, copy aggressively, adapt to your workflow.
