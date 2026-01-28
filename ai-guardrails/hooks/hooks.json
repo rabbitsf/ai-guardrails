@@ -1,0 +1,40 @@
+{
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "tool": "Write",
+      "command": "echo \"⚠️ Reminder: run /guardrails:start before writing code.\""
+    }
+  ]
+}
+
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "tool": "Write",
+      "command": "echo \"📝 Guardrails: After code changes, run /ai-guardrails:end to update docs/PROJECT_GUIDE.md and CHANGELOG_AI.md.\""
+    },
+    {
+      "event": "PostToolUse",
+      "tool": "Edit",
+      "command": "echo \"📝 Guardrails: After code changes, run /ai-guardrails:end to update docs/PROJECT_GUIDE.md and CHANGELOG_AI.md.\""
+    }
+  ]
+}
+
+{
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "tool": "Write",
+      "command": "python3 ~/.claude/plugins/ai-guardrails/scripts/require_project_guide_update.py"
+    },
+    {
+      "event": "PreToolUse",
+      "tool": "Edit",
+      "command": "python3 ~/.claude/plugins/ai-guardrails/scripts/require_project_guide_update.py"
+    }
+  ]
+}
+
